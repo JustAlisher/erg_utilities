@@ -1,0 +1,6 @@
+{
+  "baudrate": 9600,
+  "port": "2",
+  "connect_interval": 20,
+  "value": "-1"
+}

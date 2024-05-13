@@ -83,6 +83,27 @@ def action_on_detected_plate_number_method(plate_number: str):
         asyncio.run(broadcast_message(json.dumps(result['data'])))
 
 
+def create_weighing_method(plate_number: str, weight: int, photo_abs_path: str):
+    domain = get_data_from_json('domain')
+    endpoint = "cv_assist/auto_weighing"
+    url = f"https://{domain}/api/{endpoint}"
+
+    with open(photo_abs_path, 'rb') as file:
+        files = {'file': ('filename.png', file, 'image/png')}
+        data = {
+            "plate_number": plate_number,
+            "weight": weight,
+        }
+        result = requests.post(url, files=files, data=data).json()
+        logging.info(f'Запрос на создание отвеса с гос.номером {plate_number}, весом {weight} отправлен на сервер')
+        if 'data' in result:
+            data = result['data']
+            logging.info(f'Ответ получен: {data}')
+            asyncio.run(broadcast_message(json.dumps(result['data'])))
+        #     print(result['data'])
+        # print(result)
+
+
 # def create_photo_method(image_base64: str):
 #     domain = get_data_from_json('domain')
 #     endpoint = "photo/create"
@@ -112,7 +133,8 @@ def create_photo_method(photo_abs_path: str):
             result = requests.post(url, files=files)
             logging.info(f'Запрос на создание фото отправлен на сервер')
             if result:
-                logging.info(f'Ответ: status: {result.status_code}, request endpoint: {result.url}, content: {result.text}')
+                logging.info(
+                    f'Ответ: status: {result.status_code}, request endpoint: {result.url}, content: {result.text}')
             else:
                 logging.info(f'Произошла ошибка, ответ от сервера: {result.text}')
     except FileNotFoundError:

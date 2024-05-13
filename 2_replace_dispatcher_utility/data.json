@@ -4,7 +4,7 @@
   "rtsp_second": "",
   "trigger": 500,
   "is_testing_mode": true,
-  "domain": "api.betonic.freemyip.com",
+  "domain": "api.erg-pilot.freemyip.com",
   "default_camera_number": 1,
   "connect_interval": 20
 }

@@ -1,0 +1,11 @@
+pyinstaller==5.6.2
+numpy==1.25.2
+paddlepaddle-gpu==2.5.1
+paddleocr==2.7.0.2
+
+opencv-python==4.5.3.56
+opencv-python-headless==4.5.3.56
+opencv-contrib-python==4.5.3.56
+
+websockets==12.0
+requests==2.31.0

@@ -83,6 +83,21 @@ def action_on_detected_plate_number_method(plate_number: str):
         asyncio.run(broadcast_message(json.dumps(result['data'])))
 
 
+def check_kpp_allowance(plate_number: str):
+    domain = get_data_from_json('domain')
+    endpoint = "cv_assist/kpp_allowance"
+
+    url = f"https://{domain}/api/{endpoint}"
+
+    request_data = {"plate_number": plate_number}
+    result = requests.post(url, json=request_data).json()
+
+    logging.info(f'Запрос на проверку допуска КПП с гос.номером {plate_number} отправлен на сервер')
+    logging.info(f'Ответ получен: {result}')
+
+    if 'data' in result:
+        return result['data']
+
 # def create_photo_method(image_base64: str):
 #     domain = get_data_from_json('domain')
 #     endpoint = "photo/create"
